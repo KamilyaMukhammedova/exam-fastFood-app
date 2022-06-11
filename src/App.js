@@ -7,6 +7,7 @@ import colaImage from './assets/cola.png';
 import {useState} from "react";
 import {nanoid} from "nanoid";
 import Items from "./components/Items/Items";
+import OrderDetails from "./components/OrderDetails/OrderDetails";
 
 const ITEMS = [
   {name: 'Hamburger', price: 80, image: hamburgerImage},
@@ -27,13 +28,24 @@ const App = () => {
     {name: 'Cola', count: 0, id: nanoid()},
   ]);
 
+  const [orderIsEmpty, setOrderIsEmpty] = useState(true);
+
+  const checkOrderState = () => {
+    const order = items.filter(item => item.count === 0);
+    if(order.length !== 0) {
+      setOrderIsEmpty(false);
+    }
+    return orderIsEmpty;
+  };
+
   const itemsComponent = <Items items={items} ITEMS={ITEMS}/>;
+  const orderDetailsComponent = <OrderDetails isEmpty={checkOrderState}/>;
 
   return (
     <div className="Container">
       <div className="Container_order">
         <h2>Order Details</h2>
-        hhhhh
+        {orderDetailsComponent}
       </div>
       <div className="Container_items">
         <h2>Add items</h2>
