@@ -6,6 +6,7 @@ import teaImage from './assets/tea.png';
 import colaImage from './assets/cola.png';
 import {useState} from "react";
 import {nanoid} from "nanoid";
+import Items from "./components/Items/Items";
 
 const ITEMS = [
   {name: 'Hamburger', price: 80, image: hamburgerImage},
@@ -26,9 +27,20 @@ const App = () => {
     {name: 'Cola', count: 0, id: nanoid()},
   ]);
 
+  const itemsComponent = <Items items={items} ITEMS={ITEMS}/>;
 
   return (
     <div className="Container">
+      <div className="Container_order">
+        <h2>Order Details</h2>
+        hhhhh
+      </div>
+      <div className="Container_items">
+        <h2>Add items</h2>
+        <div className="Items_inner">
+          {itemsComponent}
+        </div>
+      </div>
 
     </div>
   );
