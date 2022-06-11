@@ -8,7 +8,13 @@ const ItemOrderDetails = (props) => {
       <p className="Price">{props.price} KGS</p>
       <p>x {props.count}</p>
       <p className="Price">{props.fullPrice} KGS</p>
-      <button type="button" className="RemoveBtn">-</button>
+      <button
+        type="button"
+        className="RemoveBtn"
+        onClick={props.removeOneItem}
+      >
+        -
+      </button>
     </div>
   );
 };

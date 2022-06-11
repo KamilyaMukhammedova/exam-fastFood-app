@@ -64,6 +64,20 @@ const App = () => {
     setItems(itemsCopy);
   };
 
+  const removeOneItem = itemId => {
+    const itemsCopy = items.map((item, index) => {
+      if (item.id === itemId) {
+        setTotalPrice(prev => prev - ITEMS[index].price);
+        return {
+          ...item,
+          count: item.count - 1,
+        }
+      }
+      return item;
+    });
+    setItems(itemsCopy);
+  };
+
   const getItemOrderDetailsComponent = () => {
     return items.map((item, index) => {
       if (item.count !== 0) {
@@ -74,6 +88,7 @@ const App = () => {
           price={ITEMS[index].price}
           count={item.count}
           fullPrice={ITEMS[index].price * item.count}
+          removeOneItem={() => removeOneItem(item.id)}
         />;
       } else {
         return null;
@@ -103,7 +118,6 @@ const App = () => {
           {itemsComponent}
         </div>
       </div>
-
     </div>
   );
 };
