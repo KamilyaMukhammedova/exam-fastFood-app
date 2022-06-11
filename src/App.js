@@ -4,6 +4,8 @@ import friesImage from './assets/fries.png';
 import coffeeImage from './assets/coffee.png';
 import teaImage from './assets/tea.png';
 import colaImage from './assets/cola.png';
+import {useState} from "react";
+import {nanoid} from "nanoid";
 
 const ITEMS = [
   {name: 'Hamburger', price: 80, image: hamburgerImage},
@@ -15,6 +17,16 @@ const ITEMS = [
 ];
 
 const App = () => {
+  const [items, setItems] = useState([
+    {name: 'Hamburger', count: 0, id: nanoid()},
+    {name: 'Cheeseburger', count: 0, id: nanoid()},
+    {name: 'Fries', count: 0, id: nanoid()},
+    {name: 'Coffee', count: 0, id: nanoid()},
+    {name: 'Tea', count: 0, id: nanoid()},
+    {name: 'Cola', count: 0, id: nanoid()},
+  ]);
+
+
   return (
     <></>
   );
