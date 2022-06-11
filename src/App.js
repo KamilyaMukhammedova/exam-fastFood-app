@@ -30,10 +30,11 @@ const App = () => {
   ]);
 
   const [orderIsEmpty, setOrderIsEmpty] = useState(true);
+  const [totalPrice, setTotalPrice] = useState(0);
 
   const checkOrderState = () => {
     const order = items.filter(item => item.count !== 0);
-    if(order.length !== 0) {
+    if (order.length !== 0) {
       setOrderIsEmpty(false);
     } else {
       setOrderIsEmpty(true);
@@ -51,7 +52,8 @@ const App = () => {
 
   const addItem = itemId => {
     const itemsCopy = items.map((item, index) => {
-      if(item.id === itemId) {
+      if (item.id === itemId) {
+        setTotalPrice(prev => prev + ITEMS[index].price);
         return {
           ...item,
           count: item.count + 1,
@@ -64,13 +66,14 @@ const App = () => {
 
   const getItemOrderDetailsComponent = () => {
     return items.map((item, index) => {
-      if(item.count !== 0) {
+      if (item.count !== 0) {
         return <
           ItemOrderDetails
           key={index}
           name={item.name}
           price={ITEMS[index].price}
           count={item.count}
+          fullPrice={ITEMS[index].price * item.count}
         />;
       } else {
         return null;
@@ -79,7 +82,12 @@ const App = () => {
   };
 
   const itemsComponent = <Items items={items} ITEMS={ITEMS} addItem={addItem}/>;
-  const orderDetailsComponent = <OrderDetails isEmpty={checkOrderState} children={getItemOrderDetailsComponent()}/>;
+  const orderDetailsComponent =
+    <OrderDetails
+      isEmpty={checkOrderState}
+      children={getItemOrderDetailsComponent()}
+      totalPrice={totalPrice}
+    />;
 
   return (
     <div className="Container">

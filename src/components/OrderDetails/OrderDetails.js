@@ -1,4 +1,5 @@
 import React from 'react';
+import TotalPrice from "../TotalPrice/TotalPrice";
 
 const OrderDetails = (props) => {
   return (
@@ -8,6 +9,7 @@ const OrderDetails = (props) => {
         <p>Please add some items!</p>
       </div>
       <div>{props.children}</div>
+      <TotalPrice totalPrice={props.totalPrice}/>
     </div>
   );
 };
