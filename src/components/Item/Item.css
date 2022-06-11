@@ -5,9 +5,17 @@
     width: 40%;
     margin-bottom: 20px;
     background-color:  #667292;
+    opacity: 1;
 }
 
-.Img {
+.Item:hover {
+    -webkit-transform: scale(1.05);
+    -ms-transform: scale(1.05);
+    transform: scale(1.05);
+    opacity: 0.6;
+}
+
+.Item_img {
     width: 100px;
     height: 100px;
 }

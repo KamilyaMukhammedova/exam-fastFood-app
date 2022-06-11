@@ -17,13 +17,29 @@
     width: 15%;
 }
 
-.Price {
+.ItemOrderDetails_price {
     font-size: 11px;
 }
 
-.RemoveBtn {
-    width: 25px;
-    height: 20px;
-    background-color: #f1e3dd;
+.ItemOrderDetails_rmvBtn,
+.ItemOrderDetails_rmvAllBtn {
     border: none;
+    height: 20px;
+}
+
+.ItemOrderDetails_rmvBtn:hover,
+.ItemOrderDetails_rmvAllBtn:hover {
+    -webkit-transform: scale(1.2);
+    -ms-transform: scale(1.2);
+    transform: scale(1.2);
+}
+
+.ItemOrderDetails_rmvBtn {
+    width: 25px;
+    background-color: #edf2f6;
+}
+
+.ItemOrderDetails_rmvAllBtn {
+    background-color: #667292;
+    color: #dee7ef;
 }

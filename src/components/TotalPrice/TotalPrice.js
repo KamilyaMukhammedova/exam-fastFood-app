@@ -1,10 +1,13 @@
 import React from 'react';
 import './TotalPrice.css';
 
-const TotalPrice = ({totalPrice}) => {
+const TotalPrice = (props) => {
   return (
-    <div className="TotalPrice">
-      <p>Total price: {totalPrice} KGS</p>
+    <div
+      className="TotalPrice"
+      style={props.isEmpty === true ? {display: 'none'} : {display: 'block'}}
+    >
+      <p>Total price: {props.totalPrice} KGS</p>
     </div>
   );
 };

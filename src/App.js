@@ -1,11 +1,11 @@
+import {useState} from "react";
+import {nanoid} from "nanoid";
 import hamburgerImage from './assets/hamburger.png';
 import cheeseburgerImage from './assets/cheeseburger.png';
 import friesImage from './assets/fries.png';
 import coffeeImage from './assets/coffee.png';
 import teaImage from './assets/tea.png';
 import colaImage from './assets/cola.png';
-import {useState} from "react";
-import {nanoid} from "nanoid";
 import Items from "./components/Items/Items";
 import OrderDetails from "./components/OrderDetails/OrderDetails";
 import ItemOrderDetails from "./components/ItemOrderDetails/ItemOrderDetails";
@@ -29,25 +29,13 @@ const App = () => {
     {name: 'Cola', count: 0, id: nanoid()},
   ]);
 
-  const [orderIsEmpty, setOrderIsEmpty] = useState(true);
   const [totalPrice, setTotalPrice] = useState(0);
 
   const checkOrderState = () => {
-    const order = items.filter(item => item.count !== 0);
-    if (order.length !== 0) {
-      setOrderIsEmpty(false);
-    } else {
-      setOrderIsEmpty(true);
-    }
-    return orderIsEmpty;
-
-    // let isEmpty = true;
-    //
-    // const order = items.filter(item => item.count !== 0);
-    // if(order.length !== 0) {
-    //   isEmpty = false;
-    // }
-    // return isEmpty;
+    let isEmpty;
+    const orders = items.filter(item => item.count !== 0);
+    isEmpty = orders.length === 0;
+    return isEmpty;
   };
 
   const addItem = itemId => {
@@ -78,6 +66,20 @@ const App = () => {
     setItems(itemsCopy);
   };
 
+  const removeAllItems = itemId => {
+    const itemsCopy = items.map((item, index) => {
+      if (item.id === itemId) {
+        setTotalPrice(prev => prev - (ITEMS[index].price * item.count));
+        return {
+          ...item,
+          count: 0,
+        }
+      }
+      return item;
+    });
+    setItems(itemsCopy);
+  };
+
   const getItemOrderDetailsComponent = () => {
     return items.map((item, index) => {
       if (item.count !== 0) {
@@ -89,6 +91,7 @@ const App = () => {
           count={item.count}
           fullPrice={ITEMS[index].price * item.count}
           removeOneItem={() => removeOneItem(item.id)}
+          removeAllItems={() => removeAllItems(item.id)}
         />;
       } else {
         return null;
@@ -99,7 +102,7 @@ const App = () => {
   const itemsComponent = <Items items={items} ITEMS={ITEMS} addItem={addItem}/>;
   const orderDetailsComponent =
     <OrderDetails
-      isEmpty={checkOrderState}
+      isEmpty={checkOrderState()}
       children={getItemOrderDetailsComponent()}
       totalPrice={totalPrice}
     />;
@@ -123,3 +126,4 @@ const App = () => {
 };
 
 export default App;
+
