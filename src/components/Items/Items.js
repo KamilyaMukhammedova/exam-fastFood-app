@@ -8,6 +8,7 @@ const Items = (props) => {
       image={props.ITEMS[index].image}
       price={props.ITEMS[index].price}
       name={item.name}
+      addItem={() => props.addItem(item.id)}
     />
   });
 };

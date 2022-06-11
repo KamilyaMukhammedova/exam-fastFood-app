@@ -8,6 +8,7 @@ import {useState} from "react";
 import {nanoid} from "nanoid";
 import Items from "./components/Items/Items";
 import OrderDetails from "./components/OrderDetails/OrderDetails";
+import ItemOrderDetails from "./components/ItemOrderDetails/ItemOrderDetails";
 
 const ITEMS = [
   {name: 'Hamburger', price: 80, image: hamburgerImage},
@@ -31,25 +32,66 @@ const App = () => {
   const [orderIsEmpty, setOrderIsEmpty] = useState(true);
 
   const checkOrderState = () => {
-    const order = items.filter(item => item.count === 0);
+    const order = items.filter(item => item.count !== 0);
     if(order.length !== 0) {
       setOrderIsEmpty(false);
+    } else {
+      setOrderIsEmpty(true);
     }
     return orderIsEmpty;
+
+    // let isEmpty = true;
+    //
+    // const order = items.filter(item => item.count !== 0);
+    // if(order.length !== 0) {
+    //   isEmpty = false;
+    // }
+    // return isEmpty;
   };
 
-  const itemsComponent = <Items items={items} ITEMS={ITEMS}/>;
-  const orderDetailsComponent = <OrderDetails isEmpty={checkOrderState}/>;
+  const addItem = itemId => {
+    const itemsCopy = items.map((item, index) => {
+      if(item.id === itemId) {
+        return {
+          ...item,
+          count: item.count + 1,
+        }
+      }
+      return item;
+    });
+    setItems(itemsCopy);
+  };
+
+  const getItemOrderDetailsComponent = () => {
+    return items.map((item, index) => {
+      if(item.count !== 0) {
+        return <
+          ItemOrderDetails
+          key={index}
+          name={item.name}
+          price={ITEMS[index].price}
+          count={item.count}
+        />;
+      } else {
+        return null;
+      }
+    });
+  };
+
+  const itemsComponent = <Items items={items} ITEMS={ITEMS} addItem={addItem}/>;
+  const orderDetailsComponent = <OrderDetails isEmpty={checkOrderState} children={getItemOrderDetailsComponent()}/>;
 
   return (
     <div className="Container">
       <div className="Container_order">
         <h2>Order Details</h2>
-        {orderDetailsComponent}
+        <div>
+          {orderDetailsComponent}
+        </div>
       </div>
       <div className="Container_items">
         <h2>Add items</h2>
-        <div className="Items_inner">
+        <div className="Container_items_inner">
           {itemsComponent}
         </div>
       </div>
